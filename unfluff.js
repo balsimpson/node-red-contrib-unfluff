@@ -92,7 +92,7 @@ module.exports = function (RED) {
 
 			data.url = config.url ? config.url : msg.url;
 			let results = getText(data.url);
-			node.status({ fill: 'orange', shape: 'ring', text: 'Requesting'  });
+			node.status({ fill: 'yellow', shape: 'ring', text: 'Requesting'  });
 			results.then((value) => {
 				if (value.error) {
 					node.status({ fill: 'red', shape: 'ring', text: 'error - ' + data.url });
