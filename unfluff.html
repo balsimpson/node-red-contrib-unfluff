@@ -1,0 +1,78 @@
+<script type="text/javascript">
+	RED.nodes.registerType('unfluff', {
+		category: 'advanced',
+		color: '#EECC78',
+		defaults: {
+			name: { value: 'unfluff' },
+			url: { value: ''}
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: 'link.png',
+		label: function () {
+			return this.name || 'unfluff';
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name='unfluff'>
+	<div class="form-row">
+		<label for='node-input-name'><i class='icon-link'></i> Name</label>
+		<input type='text' id='node-input-name' placeholder='Name'>
+	</div>
+	<div class='form-row'>
+		<label for='node-input-url'><i class='icon-link'></i> URL</label>
+		<input type='text' id='node-input-url' placeholder='http://example.com'>
+	</div>
+</script>
+
+<script type='text/x-red' data-help-name='unfluff'>
+<h2>An automatic web page content extractor</h2>
+<br>
+<p>Automatically grab the main text out of a webpage, or in other words, it turns pretty webpages into boring plain text/json data.
+
+This is a Node-RED wrapper for the npm module unfluff. Read more at https://www.npmjs.com/package/unfluff
+</p>
+
+<h3>Inputs</h3>
+<dl class="message-properties">
+	<dt>URL
+		<span class="property-type">string</span>
+	</dt>
+	<dd> the url of the webpage to unfluff e.g: http://www.polygon.com/2014/6/26/5842180/shovel-knight-review-pc-3ds-wii-u 
+
+	<br>
+	If left blank, will use the incoming node's <code>msg.url</code> value.
+	</dd>
+</dl>
+
+<h3>Outputs</h3>
+<ol class="node-ports">
+	<li>Standard output
+		<dl class="message-properties">
+			<dt>payload <span class="property-type">object</span></dt>
+			<dd> is a JSON object with the following fields:
+				<pre><code>
+				{
+					title - The document's title (from the <title> tag)
+					softTitle - A version of title with less truncation
+					date - The document's publication date
+					copyright - The document's copyright line, if present
+					author - The document's author
+					publisher - The document's publisher (website name)
+					text - The main text of the document with all the junk thrown away
+					image - The main image for the document (what's used by facebook, etc.)
+					videos - An array of videos that were embedded in the article. Each video has src, width and height.
+					tags- Any tags or keywords that could be found by checking <rel> tags or by looking at href urls.
+					canonicalLink - The canonical url of the document, if given.
+					lang - The language of the document, either detected or supplied by you.
+					description - The description of the document, from <meta> tags
+					favicon - The url of the document's favicon.
+					links - An array of links embedded within the article text. (text and href for each)
+				}							
+			</code></pre>
+			</dd>
+		</dl>
+	</li>
+</ol>
+</script>
